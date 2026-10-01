@@ -1,0 +1,22 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: SVG icon
+group: Atoms
+status: stable
+description: Inline SVG icon. Colour follows the text colour (currentColor).
+props:
+  type: object
+  required: [name]
+  properties:
+    name:
+      type: string
+      title: Icon name
+      enum: [arrow-right]
+      examples: [arrow-right]
+    size:
+      type: integer
+      title: Size in px
+      description: Width and height, defaults to 20.
+      examples: [20]
+    modifier:
+      type: string
+      title: Extra CSS class

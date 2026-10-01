@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Page frame: header (branding + main menu), main content, footer.
+ *
+ * Regions (Structure → Block layout): page.header, page.primary_menu,
+ * page.highlighted, page.content, page.footer.
+ *
+ * The listing itself is NOT in this template: it is a view block placed with
+ * Layout Builder on the Home page (/ and /listing) and on Resource category
+ * term pages, and it renders inside page.content.
+ */
+#}
+{# Debug: uncomment to see which regions have content on this page. #}
+{# {{ dump(page|keys) }} #}
+
+<header class="page-header" role="banner">
+  <div class="page-header__inner">
+    {{ page.header }}
+    {{ page.primary_menu }}
+  </div>
+</header>
+
+<main id="main-content" class="page-main" role="main" tabindex="-1">
+  {{ page.highlighted }}
+  {{ page.content }}
+</main>
+
+{% if page.footer %}
+  <footer class="page-footer" role="contentinfo">
+    <div class="page-footer__inner">
+      {{ page.footer }}
+    </div>
+  </footer>
+{% endif %}

@@ -1,0 +1,20 @@
+uuid: f1c18f05-0e74-48b2-81c2-d37c1c7b8d24
+langcode: en
+status: true
+dependencies:
+  theme:
+    - resource_theme
+id: resource_theme_local_tasks
+theme: resource_theme
+region: highlighted
+weight: 3
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: ''
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: true
+visibility: {  }

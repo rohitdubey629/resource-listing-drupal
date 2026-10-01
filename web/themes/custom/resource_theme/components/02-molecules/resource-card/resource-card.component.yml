@@ -1,0 +1,37 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Resource card
+group: Molecules
+status: stable
+description: Card in the Filtered listing grid — image, title, summary and a "View more" link; the whole card is one link.
+props:
+  type: object
+  required: [title, url]
+  properties:
+    title:
+      type: string
+      title: Title
+      examples: ['Empower your sales team with automation']
+    url:
+      type: string
+      title: URL
+      examples: ['/node/1']
+    summary:
+      type: string
+      title: Summary
+      examples: ['Discover how automation can help sales reps close more deals by focusing on what matters.']
+    image_url:
+      type: string
+      title: Image URL
+      examples: ['/assets/images/hero-sample.jpg']
+    image_alt:
+      type: string
+      title: Image alt text
+    link_text:
+      type: string
+      title: Link text
+      default: View more
+    title_tag:
+      type: string
+      title: Title tag
+      enum: [h2, h3, h4]
+      default: h3

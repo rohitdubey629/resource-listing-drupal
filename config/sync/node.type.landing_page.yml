@@ -1,0 +1,11 @@
+uuid: a2ce8901-5a0c-426a-897e-a3b6fa02c806
+langcode: en
+status: true
+dependencies: {  }
+name: 'Landing page'
+type: landing_page
+description: 'Page built with Layout Builder.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

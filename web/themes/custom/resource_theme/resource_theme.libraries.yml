@@ -1,0 +1,6 @@
+# Site-wide base styles. Component styles live next to each component in
+# components/ and are attached automatically by Drupal SDC.
+global:
+  css:
+    base:
+      css/base.css: {}

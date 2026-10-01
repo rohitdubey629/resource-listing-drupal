@@ -1,0 +1,45 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Filtered listing
+group: Organisms
+status: stable
+description: Filter sidebar + grid of Resource cards. Sidebar stacks above the grid below 992px; grid is 1 / 2 / 3 columns. Filters submit on change (filtered-listing.js).
+props:
+  type: object
+  properties:
+    filters_heading:
+      type: string
+      title: Sidebar heading
+      default: Filters
+    items:
+      type: array
+      title: Cards
+      description: Each item has the Resource card props — title, url, summary, image_url, image_alt.
+      items:
+        type: object
+        properties:
+          title:
+            type: string
+          url:
+            type: string
+          summary:
+            type: string
+          image_url:
+            type: string
+          image_alt:
+            type: string
+slots:
+  filters:
+    title: Filters
+    description: Filter controls (Drupal — the Views exposed form).
+  empty:
+    title: Empty text
+    description: Shown when there are no items.
+  pager:
+    title: Pager
+  summary:
+    title: Result summary
+    description: e.g. "1 – 6 of 6".
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

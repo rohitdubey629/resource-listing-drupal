@@ -1,0 +1,18 @@
+uuid: fa9fc59a-89e7-4c9a-ba80-5a60646183d9
+langcode: en
+status: true
+dependencies:
+  theme:
+    - resource_theme
+id: resource_theme_page_title
+theme: resource_theme
+region: content
+weight: 4
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: ''
+  label_display: '0'
+  provider: core
+visibility: {  }

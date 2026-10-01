@@ -1,0 +1,98 @@
+{#
+/**
+ * @file
+ * View "Resource listing", display "Block" → Filtered listing organism (SDC).
+ *
+ * Admin:
+ * - Content → Resource (title, Category, Image (media), Summary).
+ * - Structure → Views → Resource listing: exposed filters "category"
+ *   (dropdown) and "topic" (checkboxes, see resource_theme.theme); contextual
+ *   filter = term ID from URL, so /listing/crm (term alias) shows CRM only
+ *   and /listing (no term) shows everything.
+ * - Layout Builder: Add block → Lists (Views) → "Resource listing", on the
+ *   Home page (front page, alias /listing) and on the Resource category
+ *   term display.
+ *
+ * Each result row (a Resource node) becomes one card:
+ * - title                                → title
+ * - node URL                             → url
+ * - field_resource_summary               → summary
+ * - field_resource_image (media: image)  → image_url + image_alt
+ *
+ * Debugging: turn on Twig development mode (Configuration → Development →
+ * Development settings), then uncomment the dump() lines below one step at a
+ * time, top to bottom. Each step checks the value the next step relies on.
+ * Comment them again when done.
+ */
+#}
+
+{# ---------------------------------------------------------------------- #}
+{# Debug step 1 — the view itself.                                         #}
+{# How many rows did the query return? 0 = check the filters below.        #}
+{# {{ dump(view.result|length) }} #}
+{#                                                                         #}
+{# Debug step 2 — contextual filter (term ID from the URL).                #}
+{# /listing/crm → ["<CRM term ID>"]; /listing → [] (= show all).           #}
+{# {{ dump(view.args) }} #}
+{#                                                                         #}
+{# Debug step 3 — exposed filters chosen by the visitor.                   #}
+{# e.g. { "category": "3", "topic": { "5": "5" } }; empty = nothing chosen. #}
+{# {{ dump(view.getExposedInput()) }} #}
+{# ---------------------------------------------------------------------- #}
+
+{% set items = [] %}
+{% for row in view.result %}
+  {% set resource = row._entity %}
+
+  {# Debug step 4 — the node of this row (ID + title). #}
+  {# {{ dump({ nid: resource.id, title: resource.label, bundle: resource.bundle }) }} #}
+
+  {# Debug step 5 — summary field (plain text). #}
+  {# {{ dump(resource.field_resource_summary.value) }} #}
+
+  {# Debug step 6 — category term (not shown on the card, but checks the filter data). #}
+  {# {{ dump(resource.field_resource_category.entity ? { tid: resource.field_resource_category.target_id, name: resource.field_resource_category.entity.label } : 'no category') }} #}
+
+  {# Image: node → media (field_resource_image) → image field (field_media_image) → file. #}
+  {% set media = resource.field_resource_image.entity %}
+  {% set image = media and not media.field_media_image.isEmpty() ? media.field_media_image : null %}
+
+  {# Debug step 7 — media entity referenced by the node. #}
+  {# {{ dump(media ? { mid: media.id, bundle: media.bundle, name: media.label } : 'no media') }} #}
+
+  {# Debug step 8 — image file inside the media (URI + alt). #}
+  {# {{ dump(image and image.entity ? { uri: image.entity.uri.value, url: file_url(image.entity.uri.value), alt: image.alt } : 'no image file') }} #}
+
+  {% set items = items|merge([{
+    title: resource.label,
+    url: path('entity.node.canonical', { node: resource.id }),
+    summary: resource.field_resource_summary.value|default(''),
+    image_url: image and image.entity ? file_url(image.entity.uri.value) : '',
+    image_alt: image ? image.alt|default('') : '',
+  }]) %}
+{% endfor %}
+
+{# Debug step 9 — the final cards sent to the component (plain values only). #}
+{# {{ dump(items) }} #}
+
+{# Debug step 10 — the other parts passed as slots (render arrays). #}
+{# Expect form keys (category, topic, actions…) and the "result" footer area. #}
+{# {{ dump({ exposed: exposed|keys, footer: footer|keys, empty: empty|keys, pager: pager|keys }) }} #}
+
+{# js-view-dom-id-* is required: Views AJAX replaces this wrapper. #}
+{% set classes = [
+  'view-resource-listing',
+  dom_id ? 'js-view-dom-id-' ~ dom_id,
+] %}
+
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {{ title_suffix }}
+  {% include 'resource_theme:filtered-listing' with {
+    items: items,
+    filters: exposed,
+    empty: empty,
+    pager: pager,
+    summary: footer,
+  } only %}
+</div>

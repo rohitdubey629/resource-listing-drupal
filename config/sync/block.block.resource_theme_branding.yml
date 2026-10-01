@@ -1,0 +1,23 @@
+uuid: 5144d9e7-1f1d-45c6-904f-a5acf97849ec
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - resource_theme
+id: resource_theme_branding
+theme: resource_theme
+region: header
+weight: 0
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: ''
+  label_display: '0'
+  provider: system
+  use_site_logo: false
+  use_site_name: true
+  use_site_slogan: false
+visibility: {  }

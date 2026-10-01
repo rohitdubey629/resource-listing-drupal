@@ -1,0 +1,42 @@
+{#
+/**
+ * @file
+ * Resource card — molecule (SDC: resource_theme:resource-card).
+ *
+ * Props:
+ * - title, url: card title; the whole card links to url.
+ * - summary: short teaser text.
+ * - image_url, image_alt: teaser image (cropped to cover).
+ * - link_text: defaults to "View more".
+ * - title_tag: h3 (default, under the listing's h2) | h2 | h4.
+ *
+ * Presentational only: it gets plain values, no Drupal entities. Data comes
+ * from templates/views/views-view--resource-listing--block-1.html.twig.
+ *
+ * Built from: Svg icon atom.
+ */
+#}
+{# Debug: uncomment to inspect the props this component receives. #}
+{# {{ dump({ title: title, url: url, summary: summary, image_url: image_url, image_alt: image_alt }) }} #}
+
+{% set title_tag = title_tag|default('h3') %}
+
+<article class="resource-card">
+  <div class="resource-card__image">
+    {% if image_url %}
+      <img src="{{ image_url }}" alt="{{ image_alt|default('') }}" loading="lazy">
+    {% endif %}
+  </div>
+
+  <div class="resource-card__content">
+    <{{ title_tag }} class="resource-card__title">{{ title }}</{{ title_tag }}>
+    {% if summary %}
+      <p class="resource-card__summary">{{ summary }}</p>
+    {% endif %}
+    {# The link covers the whole card (see .resource-card__link::after). #}
+    <a class="resource-card__link" href="{{ url }}">
+      {{ link_text|default('View more'|t) }}<span class="visually-hidden">: {{ title }}</span>
+      {% include 'resource_theme:svg-icon' with { name: 'arrow-right', size: 16, modifier: 'resource-card__arrow' } only %}
+    </a>
+  </div>
+</article>

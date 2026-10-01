@@ -1,0 +1,152 @@
+/* Filtered listing (organism): sidebar + card grid. Side gutters come from
+   the page (.page-main). Mobile: stacked, 1 column. ≥ 640px: 2 columns.
+   ≥ 992px: 280px sidebar beside the grid. ≥ 1200px: 3 columns. */
+.filtered-listing {
+  display: grid;
+  gap: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px 0;
+  font-family: var(--rt-font, Arial, Helvetica, sans-serif);
+}
+
+.filtered-listing__sidebar {
+  align-self: start;
+  padding: 24px;
+  background: var(--rt-bg-soft, #f7f7f7);
+}
+
+.filtered-listing__heading {
+  margin: 0 0 24px;
+  color: var(--rt-text-strong, #1e1e1e);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.filtered-listing__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.filtered-listing__summary {
+  margin-top: 32px;
+  color: var(--rt-text, #232429);
+  font-size: 14px;
+  text-align: center;
+}
+
+.filtered-listing__empty {
+  padding: 40px 0;
+  text-align: center;
+}
+
+/* Exposed form (Drupal markup) inside the sidebar. */
+.filtered-listing__filters .form-item {
+  margin: 0 0 16px;
+}
+
+.filtered-listing__filters label,
+.filtered-listing__filters legend {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.filtered-listing__filters select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  font: inherit;
+}
+
+.filtered-listing__filters fieldset {
+  margin: 24px 0 0;
+  padding: 24px 0 0;
+  border: 0;
+  border-top: 1px solid var(--rt-light-grey, #ebebeb);
+}
+
+/* Float takes the legend out of the border line, so it sits under it. */
+.filtered-listing__filters legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+.filtered-listing__filters legend + * {
+  clear: both;
+}
+
+.filtered-listing__filters .form-checkboxes .form-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.filtered-listing__filters .form-checkboxes label {
+  margin: 0;
+  font-weight: 400;
+}
+
+.filtered-listing__filters input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--rt-accent, #e00034);
+}
+
+.filtered-listing__filters .form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.filtered-listing__filters .form-submit {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid var(--rt-accent, #e00034);
+  background: var(--rt-accent, #e00034);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Auto-submit (filtered-listing.js): no Apply button needed. Without JS the
+   button stays visible. */
+.filtered-listing__filters .is-auto-submit .form-actions {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .filtered-listing__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 992px) {
+  .filtered-listing {
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 32px;
+    padding: 48px 0 60px;
+  }
+
+  .filtered-listing__sidebar {
+    position: sticky;
+    top: 24px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .filtered-listing__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

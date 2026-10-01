@@ -1,0 +1,15 @@
+name: Resource Theme
+type: theme
+description: 'Theme for the Resource listing (LD-448). Every UI piece is a Single Directory Component (components/), organised as atoms, molecules and organisms.'
+core_version_requirement: ^11
+# Standalone theme: no contrib or core base theme.
+base theme: false
+package: Custom
+libraries:
+  - resource_theme/global
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  highlighted: Highlighted
+  content: Content
+  footer: Footer

@@ -1,0 +1,69 @@
+{#
+/**
+ * @file
+ * Filtered listing — organism (SDC: resource_theme:filtered-listing).
+ *
+ * Props:
+ * - filters_heading: sidebar heading, defaults to "Filters".
+ * - items: list of Resource card props { title, url, summary, image_url, image_alt }.
+ *
+ * Slots: filters, empty, pager, summary.
+ *
+ * Flow: Layout Builder → "Resource listing" view block →
+ * templates/views/views-view--resource-listing--block-1.html.twig → this
+ * component → Resource card molecule (once per item).
+ */
+#}
+{# Debug: uncomment to inspect the props this component receives. #}
+{# {{ dump({ filters_heading: filters_heading, items: items }) }} #}
+
+<section class="filtered-listing">
+  <aside class="filtered-listing__sidebar">
+    <h2 class="filtered-listing__heading">{{ filters_heading|default('Filters'|t) }}</h2>
+    <div class="filtered-listing__filters">
+      {% block filters %}
+        {{ filters }}
+      {% endblock %}
+    </div>
+  </aside>
+
+  <div class="filtered-listing__main">
+    {% if items %}
+      <ul class="filtered-listing__grid">
+        {% for item in items %}
+          {# Debug: uncomment to inspect one card. #}
+          {# {{ dump(item) }} #}
+          <li class="filtered-listing__item">
+            {% include 'resource_theme:resource-card' with {
+              title: item.title,
+              url: item.url,
+              summary: item.summary|default(''),
+              image_url: item.image_url|default(''),
+              image_alt: item.image_alt|default(''),
+            } only %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="filtered-listing__empty">
+        {% block empty %}
+          {{ empty }}
+        {% endblock %}
+      </div>
+    {% endif %}
+
+    <div class="filtered-listing__pager">
+      {% block pager %}
+        {{ pager }}
+      {% endblock %}
+    </div>
+    {# No summary ("0 – 0 of 0") when there are no items. #}
+    {% if items %}
+      <div class="filtered-listing__summary">
+        {% block summary %}
+          {{ summary }}
+        {% endblock %}
+      </div>
+    {% endif %}
+  </div>
+</section>

@@ -1,0 +1,25 @@
+uuid: 49629abe-0de2-4e7c-9f22-30f01d28e238
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - resource_theme
+id: resource_theme_main_menu
+theme: resource_theme
+region: primary_menu
+weight: 1
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: ''
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility: {  }

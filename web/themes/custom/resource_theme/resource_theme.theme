@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Theme hooks for Resource Theme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter() for views_exposed_form.
+ *
+ * Resource listing (LD-448): "All Categories" label on the dropdown, and the
+ * "topic" filter shown as checkboxes instead of a multi-select box.
+ *
+ * Debugging: uncomment the dump() lines one step at a time, then reload
+ * /listing (the output shows at the top of the page). Do not leave them on
+ * while testing the filters: on an AJAX request the dump output breaks the
+ * response. Comment them again when done.
+ */
+function resource_theme_form_views_exposed_form_alter(array &$form, FormStateInterface $form_state): void {
+  $view = $form_state->get('view');
+
+  // Debug step 1 — which view built this form? Must be "resource_listing".
+  // dump($view ? $view->id() . ':' . $view->current_display : 'no view');
+  if (!$view || $view->id() !== 'resource_listing') {
+    return;
+  }
+
+  // Debug step 2 — form element keys. "category" and "topic" must be there
+  // (they are the filter identifiers set in the view).
+  // dump(array_keys($form));
+
+  // Debug step 3 — dropdown options: term ID => name, plus "All".
+  // dump($form['category']['#options'] ?? 'no category element');
+  if (isset($form['category']['#options']['All'])) {
+    $form['category']['#options']['All'] = t('All Categories');
+  }
+
+  // Debug step 4 — the "topic" element before the change (#type "select",
+  // #multiple TRUE) and the visitor's current input.
+  // dump([
+  //   'type' => $form['topic']['#type'] ?? NULL,
+  //   'multiple' => $form['topic']['#multiple'] ?? NULL,
+  //   'options' => $form['topic']['#options'] ?? NULL,
+  //   'input' => $form_state->getUserInput()['topic'] ?? NULL,
+  // ]);
+  if (isset($form['topic'])) {
+    $form['topic']['#type'] = 'checkboxes';
+    unset($form['topic']['#size'], $form['topic']['#multiple']);
+  }
+
+  // Debug step 5 — the "topic" element after the change (#type "checkboxes").
+  // dump($form['topic']['#type'] ?? NULL);
+}

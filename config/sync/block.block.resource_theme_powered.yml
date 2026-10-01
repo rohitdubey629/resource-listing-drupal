@@ -1,0 +1,20 @@
+uuid: b66f9dc7-5c5c-4c8c-87b2-ec30a7439554
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - resource_theme
+id: resource_theme_powered
+theme: resource_theme
+region: footer
+weight: 6
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: ''
+  label_display: '0'
+  provider: system
+visibility: {  }

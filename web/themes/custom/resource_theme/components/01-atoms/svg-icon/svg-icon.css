@@ -1,0 +1,5 @@
+/* SVG icon (atom). */
+.svg-icon {
+  display: block;
+  flex-shrink: 0;
+}
